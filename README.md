@@ -5,120 +5,127 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 [![Express.js](https://img.shields.io/badge/Express-5.3-green?style=flat&logo=express)](https://expressjs.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=flat&logo=mongodb)](https://www.mongodb.com/)
+[![Vercel](https://img.shields.io/badge/Deployment-Vercel-black?style=flat&logo=vercel)](https://vercel.com/)
 
-> **Keya Studio** is a high-performance peer-to-peer marketplace designed for creators, filmmakers, photographers, podcasters, and musicians. Studio owners and hosts can list their creative spaces—ranging from photography cyclorama daylight lofts and cinema sound stages to podcast lounges, music recording suites, and art workshops. Creators can discover, filter, inspect dynamic availability, and reserve studio slots with transparent hourly pricing and real-time booking management.
-
----
-
-## 🌐 Live Website & Repositories
-
-- **Live Production URL**: [https://keya-studio.vercel.app](https://keya-studio.vercel.app) *(Replace with your deployed Vercel link)*
-- **Client-Side Repository**: [https://github.com/tharimakeya-dev/keya_studio_frontend](https://github.com/tharimakeya-dev/keya_studio_frontend)
-- **Server-Side Repository**: [https://github.com/tharimakeya-dev/keya_studio_backend](https://github.com/tharimakeya-dev/keya_studio_backend)
+> **Keya Studio** is a premier peer-to-peer workspace sharing platform empowering creators, filmmakers, photographers, audio engineers, and podcasters to discover, book, and host world-class production spaces worldwide. Studio hosts can list their creative lofts, acoustic cinema stages, podcast lounges, music suites, and art workshops, while creators can book hourly slots with real-time collision prevention and transparent pricing.
 
 ---
 
-## ✨ Key Website Features (Minimum 5 Core Highlights)
+## 🌐 Live URLs & Repositories
 
-1. **Dynamic Studio Discovery & Advanced Filtering**:
-   - Filter creative workspaces by medium (*Photo Studio, Film Stage, Podcast Room, Music Suite, Art Workshop*).
-   - Real-time keyword search across titles, addresses, and gear descriptions.
-   - Dynamic sorting by recommended, price (low-to-high, high-to-low), and top-rated spaces.
-   - Home page category cards that seamlessly redirect and pre-select the chosen discipline.
+| Destination | URL |
+| :--- | :--- |
+| 🚀 **Live Client Website** | [https://keya-studio-frontend.vercel.app](https://keya-studio-frontend.vercel.app) |
+| ⚡ **Live Backend API** | [https://keya-studio-backend.vercel.app](https://keya-studio-backend.vercel.app) |
+| 💻 **Frontend Repository** | [https://github.com/tharimakeya-dev/keya_studio_frontend](https://github.com/tharimakeya-dev/keya_studio_frontend) |
+| 🛠️ **Backend Repository** | [https://github.com/tharimakeya-dev/keya_studio_backend](https://github.com/tharimakeya-dev/keya_studio_backend) |
 
-2. **Full Studio Management CRUD with Cloud Image Hosting**:
-   - **Add Studio (`/add-studio`)**: Private route featuring direct **ImgBB API** image uploads, interactive amenity tags/checkboxes, pricing, security deposit, capacity, and read-only host credentials.
-   - **My Studio Listings (`/my-listings`)**: User-owned spaces filtered by `ownerEmail`.
-   - **Custom Confirmation Modal**: Safe deletion system that verifies user confirmation via a custom modal dialog before removing documents from MongoDB.
-   - **Update Studio (`/studios/edit/[id]`)**: Pre-populated editing suite with read-only host identification.
+---
 
-3. **Intelligent Booking Engine with Double-Booking Collision Prevention (Challenge 2)**:
-   - Interactive booking modal calculating shoot duration and pricing automatically.
-   - **Double-Booking Prevention Guard**: Evaluates time intervals `(newStart < existingEnd && newEnd > existingStart)` against confirmed reservations in MongoDB, blocking overlaps with an informative conflict alert.
-   - New bookings are saved with initial `"Pending"` status.
-   - **My Bookings (`/my-bookings`)**: Tracks status badges (*Pending, Confirmed, Completed, Cancelled*) with instant cancellation for pending reservations.
+## ✨ Key Platform Features
+
+1. **Dynamic Studio Discovery & Instant Search**:
+   - Filter creative workspaces across 5 dedicated disciplines (*Photo Studio, Film Stage, Podcast Room, Music Suite, Art Workshop*).
+   - Real-time search by studio name, location, and amenity keywords.
+   - Dynamic sorting by Recommended, Price (Low to High, High to Low), and Top Rating.
+   - Category browse cards on the homepage with deep linking into filtered search results.
+
+2. **Complete Studio Management CRUD with ImgBB Cloud Hosting**:
+   - **Add Studio (`/add-studio`)**: Private route allowing hosts to upload high-res imagery via the **ImgBB API**, select amenity badges, set hourly rate and security deposit, and publish live spaces.
+   - **My Studio Listings (`/my-listings`)**: Host management dashboard displaying all spaces created by the authenticated user.
+   - **Custom Confirmation Modal**: Safe deletion with custom UI modal dialog to prevent accidental deletion.
+   - **Update Studio (`/studios/edit/[id]`)**: Pre-populated editing interface with read-only host credentials.
+
+3. **Intelligent Booking Engine with Double-Booking Prevention (Challenge 2)**:
+   - Interactive booking modal with automatic duration calculation and transparent pricing breakdowns.
+   - **Collision Prevention Guard**: Real-time evaluation of time intervals `(newStart < existingEnd && newEnd > existingStart)` against existing bookings in MongoDB, rejecting conflicting time slots.
+   - New reservations start with `"Pending"` status.
+   - **My Bookings (`/my-bookings`)**: Tracks status badges (*Pending, Confirmed, Completed, Cancelled*) with instant self-cancellation for pending bookings.
 
 4. **Robust JWT Authentication with HTTPOnly Cookies (Challenge 1)**:
-   - Server-side mutation routes (`POST /api/studios`, `DELETE /api/studios/:id`, `POST /api/bookings`) protected by JWT stored in secure HTTPOnly cookies.
-   - Strict password security validation: rejects registrations unless the password contains at least one uppercase letter (`[A-Z]`), one lowercase letter (`[a-z]`), and is at least 6 characters long.
-   - Google Social Authentication and persistent session state preventing redirection on route reload.
+   - Mutation endpoints protected with JWT stored in HTTPOnly cookies (`SameSite=None`, `Secure`).
+   - Live registration password validation checklist enforcing at least one uppercase letter (`[A-Z]`), one lowercase letter (`[a-z]`), and minimum 6 characters.
+   - Full Google OAuth 2.0 social sign-in integration and persistent session restoration across route refreshes.
 
-5. **Theme Customization & Modern UX Feedback (Challenge 3 & Polish)**:
-   - System-wide **Dark/Light Mode Toggle** in the sticky navigation bar, persisting user choice via local storage.
-   - Zero generic `window.alert()` / `confirm()` dialogs: standardized modern notifications using **Sonner**.
-   - Branded animated aperture spinners and skeleton loaders during route transitions and asynchronous data fetches.
-   - Custom **404 Page** with creative studio cinema illustration and a direct "Return to Home" button.
-   - **PDF Booking Invoice Generator**: Downloadable receipt for confirmed studio bookings.
-   - **MongoDB Wishlist / Saved Studios**: Heart icon on cards enabling creators to save spaces directly to their profile.
+5. **Tailwind v4 Light/Dark Mode & Production UX (Challenge 3)**:
+   - Seamless **Dark / Light Theme Toggle** in the navigation bar with instant CSS variable switching and local storage persistence (no FOUC flash).
+   - Standardized feedback via **Sonner toasts** and zero default browser `alert()` / `confirm()` prompts.
+   - Animated aperture spinner and skeleton cards during data fetching.
+   - **PDF Booking Receipt Generator**: Instant client-side printable/downloadable booking invoice.
+   - **Saved Studios Wishlist**: MongoDB-backed favorite heart toggling on all studio cards.
+   - Custom **404 Not Found Page** with illustration and home navigation.
 
 ---
 
 ## 🛠️ Technology Stack
 
-| Layer | Technologies Selected |
+| Layer | Technologies |
 | :--- | :--- |
-| **Frontend Framework** | **Next.js 16.4** (App Router), **React 19.3**, JavaScript / ESNext |
-| **Styling & Icons** | **Tailwind CSS v4**, **Lucide React**, Brand Standalone SVGs (New X Logo) |
-| **Notifications** | **Sonner** (modern toast components) |
-| **Image Hosting** | **ImgBB API** integration for automated cloud photo hosting |
-| **Backend API** | **Express.js 5.3**, Node.js (v24 LTS) |
-| **Database** | **MongoDB Atlas** (Official MongoDB Driver v7.8) |
-| **Authentication & Security** | **JWT (JSON Web Tokens)**, **HTTPOnly Cookies**, **Bcrypt.js** password hashing, CORS credentials |
+| **Frontend Framework** | [Next.js 16.4](https://nextjs.org/) (App Router), [React 19.3](https://react.dev/) |
+| **Styling & Design** | [Tailwind CSS v4](https://tailwindcss.com/), [Lucide React Icons](https://lucide.dev/) |
+| **Feedback & Notifications** | [Sonner Toast Library](https://sonner.emilkowal.ski/) |
+| **Image Hosting** | [ImgBB API](https://api.imgbb.com/) Cloud Storage |
+| **Backend Framework** | [Express.js 5.3](https://expressjs.com/), [Node.js](https://nodejs.org/) (v20+ / v24 LTS) |
+| **Database** | [MongoDB Atlas](https://www.mongodb.com/atlas) with Official Native Driver (v7.8) |
+| **Authentication & Security** | JWT (JSON Web Tokens), HTTPOnly Cookies, Bcrypt.js, CORS Credentials |
+| **Deployment** | [Vercel](https://vercel.com/) (Frontend & Serverless Node.js Backend) |
 
 ---
 
 ## 🔑 Examiner Test Credentials
 
-For quick evaluation of authenticated features, host controls, and bookings:
+For quick evaluation of authenticated features, host listings, and reservations:
 
-| Role | Email | Password | Access Rights |
+| Account Type | Email | Password / Access | Notes |
 | :--- | :--- | :--- | :--- |
-| **Examiner / Host Account** | `elena.studios@example.com` | `KeyaStudio2026!` | Host Listings, Add Studio, Edit Studio, Bookings |
-| **Creator / Guest Account** | `creator.demo@example.com` | `Creator2026!` | Explore, Book Workspace, Cancel Booking, Wishlist |
-| **Social Login** | *Click "Continue with Google" / "Sign in with Google"* | *One-Click Instant Access* | Full creator privileges |
+| **Examiner Demo Account** | `creator.demo@example.com` | `KeyaStudio2026!` | Pre-populated with active listings & bookings |
+| **1-Click Quick Demo** | *Click "1-Click Examiner Demo Sign In"* | *Instant 1-Click* | Available on `/login` for instant grading |
+| **Google Social Login** | *Click "Sign In with Google"* | *Google OAuth 2.0* | Connects directly via Google OAuth |
 
 ---
 
 ## 🚀 Local Setup & Installation
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) (v18.0 or newer recommended, v20+ / v24 tested)
+- [Node.js](https://nodejs.org/) (v18.0 or newer recommended, v20+ / v24 LTS tested)
 - [Git](https://git-scm.com/)
-- Active MongoDB connection (MongoDB Atlas URI or local instance)
+- Active MongoDB connection URI (MongoDB Atlas or local)
 
 ---
 
 ### 1. Server Setup (`backend/`)
 
 ```bash
-# Navigate to the backend directory
+# 1. Navigate to the backend directory
 cd backend
 
-# Install dependencies
+# 2. Install dependencies
 npm install
 
-# Configure environment variables
-# Create a .env file (or copy from .env.example)
+# 3. Configure environment variables (.env)
 cp .env.example .env
 ```
 
 Ensure your `backend/.env` contains:
 ```env
 PORT=5000
-MONGO_URI=your_mongodb_atlas_connection_string
+NODE_ENV=development
+MONGO_URI=your_mongodb_connection_string
 DB_NAME=studiospace
 JWT_SECRET=studiospace_super_secret_jwt_key_b14_a8_cat_harry_2026
 CLIENT_URL=http://localhost:3000
-NODE_ENV=development
+BACKEND_URL=http://localhost:5000
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
 ```
 
 ```bash
-# Seed the database with 6 featured creative spaces (no Lorem Ipsum)
+# 4. Seed the database with 6 verified studio listings
 npm run seed
 
-# Start the Express server
+# 5. Start the backend development server
 npm run dev
-# The server will start at http://localhost:5000
+# Running at http://localhost:5000
 ```
 
 ---
@@ -126,13 +133,14 @@ npm run dev
 ### 2. Client Setup (`frontend/`)
 
 ```bash
-# Navigate to the frontend directory
+# 1. Navigate to the frontend directory
 cd ../frontend
 
-# Install dependencies
+# 2. Install dependencies
 npm install
 
-# Create local environment file .env.local
+# 3. Configure environment variables (.env.local)
+cp .env.example .env.local
 ```
 
 Ensure your `frontend/.env.local` contains:
@@ -142,7 +150,7 @@ NEXT_PUBLIC_IMGBB_API_KEY=4f4dad1c8edf0e218d86fe3b0bc6655e
 ```
 
 ```bash
-# Start the development server
+# 4. Start the Next.js development server
 npm run dev
 ```
 
@@ -150,28 +158,28 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 📋 Requirements Compliance Verification
+## 📋 Requirements Compliance Checklist
 
-| Specification Requirement | Status | Implementation Details |
+| Feature Requirement | Status | Notes |
 | :--- | :---: | :--- |
-| **No Lorem Ipsum Text** | ✅ Complete | 100% authentic production descriptions across all listings and marketing sections |
-| **No Default Alerts** | ✅ Complete | All feedback handled via **Sonner toasts** and custom confirmation modals |
-| **Sticky Navbar with Aperture Logo** | ✅ Complete | Clean Keya Studio logo, spotlight icon, active indicators, theme toggle, profile dropdown |
-| **Footer with New X Logo** | ✅ Complete | Official rebranded X logo (no Twitter bird), categories, newsletter, legal links |
-| **Hero Slider (>= 3 slides)** | ✅ Complete | Interactive crossfade slider with punchy headlines and CTAs linking to `/studios` |
-| **Featured Studios (.limit(6))** | ✅ Complete | Dynamic query returning top 6 rated studios with price, badges, and details button |
-| **Browse by Categories** | ✅ Complete | 5 interactive cards linking to `/studios?category=...` with pre-selected filters |
+| **No Lorem Ipsum Text** | ✅ Complete | 100% authentic production descriptions across all listings |
+| **No Default Alerts/Confirms** | ✅ Complete | Toast feedback via Sonner and custom modal dialogs |
+| **Sticky Navbar with Aperture Logo** | ✅ Complete | Logo, active route indicators, theme toggle, user avatar dropdown |
+| **Footer with Modern X Logo** | ✅ Complete | Official X logo (no Twitter bird), categories, newsletter, legal links |
+| **Hero Slider (>= 3 slides)** | ✅ Complete | Crossfade slider with high-res photography and CTAs |
+| **Featured Studios (.limit(6))** | ✅ Complete | 6 verified studios loaded dynamically from MongoDB |
+| **Browse by Categories** | ✅ Complete | 5 discipline cards pre-filtering the `/studios` page |
 | **2 Extra Home Sections** | ✅ Complete | "How Booking Works" (4 steps) & "Host Guarantee & Support" (4 assurances) |
-| **Password Validation** | ✅ Complete | Live checklist enforcing Uppercase, Lowercase, and 6+ characters |
-| **CRUD Operations** | ✅ Complete | Add studio with ImgBB upload, explore, details, update, delete modal |
-| **Double-Booking Prevention** | ✅ Complete | Time interval overlap collision detection against Confirmed slots (Challenge 2) |
-| **HTTPOnly Cookie JWT Security** | ✅ Complete | Mutation endpoints reject unauthorized requests with 401 Unauthorized (Challenge 1) |
-| **Dark/Light Theme Toggle** | ✅ Complete | Full system theme toggle in Navbar persisted in localStorage (Challenge 3) |
-| **PDF Booking Receipt** | ✅ Complete | One-click downloadable invoice receipt for confirmed reservations |
-| **Saved Studios Wishlist** | ✅ Complete | Heart icon allowing logged-in creators to save spaces in MongoDB |
-| **Custom 404 Page** | ✅ Complete | Creative studio illustration with direct "Return to Home" button |
+| **Password Validation Checklist** | ✅ Complete | Live check for uppercase, lowercase, and 6+ characters |
+| **Full Studio CRUD** | ✅ Complete | Add with ImgBB upload, Explore, Details, Edit, Delete with modal |
+| **Double-Booking Collision Prevention** | ✅ Complete | Overlap interval collision detection against confirmed bookings |
+| **HTTPOnly Cookie JWT Security** | ✅ Complete | Secure mutation endpoints reject unauthorized requests with 401 |
+| **Light/Dark Theme Customization** | ✅ Complete | Tailwind v4 custom variant persisted in localStorage |
+| **PDF Booking Receipt** | ✅ Complete | Downloadable invoice receipt for confirmed reservations |
+| **Saved Studios Wishlist** | ✅ Complete | MongoDB-backed favorite heart toggling on all studio cards |
+| **Custom 404 Page** | ✅ Complete | Cinematic studio illustration with direct return-home CTA |
 
 ---
 
 ## 📄 License
-This project was developed for the **B14-A8** assignment evaluation under the Creative Commons / MIT guidelines.
+This project was developed for the **B14-A8** assignment evaluation under the MIT License.
