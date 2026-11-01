@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import { Aperture, Eye, EyeOff, Lock, Mail, User, Image as ImageIcon, CheckCircle2, XCircle, Upload } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { uploadImageToImgBB } from '@/lib/uploadImage';
+import { getApiBaseUrl } from '@/lib/api';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -99,24 +100,10 @@ export default function RegisterPage() {
     }
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = () => {
     setSubmitting(true);
-    try {
-      // Mock Google profile or Google popup
-      const mockGoogleUser = {
-        name: 'Creative Explorer',
-        email: 'creator.demo@example.com',
-        photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
-        provider: 'google',
-      };
-      await socialLogin(mockGoogleUser);
-      toast.success('Signed in with Google successfully!');
-      router.push('/');
-    } catch (err) {
-      toast.error(err.message || 'Google sign-in failed');
-    } finally {
-      setSubmitting(false);
-    }
+    const apiBase = getApiBaseUrl();
+    window.location.href = `${apiBase.replace(/\/$/, '')}/auth/google`;
   };
 
   return (

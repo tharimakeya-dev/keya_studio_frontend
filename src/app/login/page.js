@@ -1,16 +1,18 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
-import { Aperture, Eye, EyeOff, Lock, Mail, XCircle } from 'lucide-react';
+import { Aperture, Eye, EyeOff, Lock, Mail, XCircle, Sparkles } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { getApiBaseUrl } from '@/lib/api';
 
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get('redirect') || '/';
+  const errorParam = searchParams.get('error');
   const { login, socialLogin } = useAuth();
 
   const [formData, setFormData] = useState({
@@ -21,6 +23,15 @@ function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState('');
+
+  // Display error redirected back from OAuth or server
+  useEffect(() => {
+    if (errorParam) {
+      const msg = decodeURIComponent(errorParam);
+      setFormError(msg);
+      toast.error(msg);
+    }
+  }, [errorParam]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -54,20 +65,26 @@ function LoginForm() {
     }
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = () => {
+    setSubmitting(true);
+    const apiBase = getApiBaseUrl();
+    window.location.href = `${apiBase.replace(/\/$/, '')}/auth/google`;
+  };
+
+  const handleDemoExaminerLogin = async () => {
     setSubmitting(true);
     try {
-      const mockGoogleUser = {
-        name: 'Creative Explorer',
+      const demoUser = {
+        name: 'Examiner Demo User',
         email: 'creator.demo@example.com',
         photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80',
-        provider: 'google',
+        provider: 'demo',
       };
-      await socialLogin(mockGoogleUser);
-      toast.success('Signed in with Google successfully!');
+      await socialLogin(demoUser);
+      toast.success('Signed in with Examiner Demo account!');
       router.push(redirectUrl);
     } catch (err) {
-      toast.error(err.message || 'Google sign-in failed');
+      toast.error(err.message || 'Demo sign-in failed');
     } finally {
       setSubmitting(false);
     }
@@ -205,6 +222,19 @@ function LoginForm() {
           </svg>
           <span>Sign In with Google</span>
         </button>
+
+        {/* 1-Click Examiner Demo Login */}
+        <div className="pt-1">
+          <button
+            type="button"
+            onClick={handleDemoExaminerLogin}
+            disabled={submitting}
+            className="w-full py-2 px-3 rounded-xl border border-dashed border-amber-500/40 bg-amber-500/5 hover:bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+            <span>1-Click Examiner Demo Sign In</span>
+          </button>
+        </div>
 
         {/* Link to Register */}
         <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">

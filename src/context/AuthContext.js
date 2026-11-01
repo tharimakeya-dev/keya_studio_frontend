@@ -32,6 +32,28 @@ export function AuthProvider({ children }) {
     let active = true;
 
     async function checkSession() {
+      // Check if redirected from Google OAuth callback with user info
+      if (typeof window !== 'undefined') {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('auth_success') === 'true' && urlParams.get('user')) {
+          try {
+            const userData = JSON.parse(decodeURIComponent(urlParams.get('user')));
+            if (userData && userData.email) {
+              if (active) {
+                setUser(userData);
+                localStorage.setItem('studiospace_user', JSON.stringify(userData));
+              }
+              const cleanUrl = window.location.pathname;
+              window.history.replaceState({}, document.title, cleanUrl);
+              if (active) setLoading(false);
+              return;
+            }
+          } catch (e) {
+            console.error('Error parsing social login param:', e);
+          }
+        }
+      }
+
       try {
         const data = await apiFetch('/auth/me');
         if (active) {
