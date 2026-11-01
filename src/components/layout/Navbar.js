@@ -25,7 +25,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, mounted } = useTheme();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -119,10 +119,10 @@ export default function Navbar() {
               aria-label="Toggle Theme"
               className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors cursor-pointer"
             >
-              {theme === 'dark' ? (
-                <Sun className="w-5 h-5 text-amber-400" />
-              ) : (
+              {mounted && theme === 'light' ? (
                 <Moon className="w-5 h-5 text-zinc-700" />
+              ) : (
+                <Sun className="w-5 h-5 text-amber-400" />
               )}
             </button>
 
@@ -239,10 +239,10 @@ export default function Navbar() {
               aria-label="Toggle Theme"
               className="p-2 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-300"
             >
-              {theme === 'dark' ? (
-                <Sun className="w-5 h-5 text-amber-400" />
-              ) : (
+              {mounted && theme === 'light' ? (
                 <Moon className="w-5 h-5 text-zinc-700" />
+              ) : (
+                <Sun className="w-5 h-5 text-amber-400" />
               )}
             </button>
 

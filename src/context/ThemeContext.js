@@ -13,33 +13,60 @@ export function ThemeProvider({ children }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    let frameId;
-    // Defer DOM sync to frame to satisfy React 19 effect rules
-    frameId = requestAnimationFrame(() => {
-      const savedTheme = localStorage.getItem('studiospace_theme');
-      const activeTheme = savedTheme === 'light' ? 'light' : 'dark';
-      setTheme(activeTheme);
+    try {
+      const saved = localStorage.getItem('keyastudio_theme') || localStorage.getItem('studiospace_theme');
+      const active = saved === 'light' ? 'light' : 'dark';
+      setTheme(active);
       setMounted(true);
-      if (activeTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    });
 
-    return () => {
-      if (frameId) cancelAnimationFrame(frameId);
-    };
+      const root = document.documentElement;
+      if (active === 'dark') {
+        root.classList.add('dark');
+        root.setAttribute('data-theme', 'dark');
+        root.style.colorScheme = 'dark';
+        if (document.body) {
+          document.body.classList.add('dark');
+          document.body.setAttribute('data-theme', 'dark');
+        }
+      } else {
+        root.classList.remove('dark');
+        root.setAttribute('data-theme', 'light');
+        root.style.colorScheme = 'light';
+        if (document.body) {
+          document.body.classList.remove('dark');
+          document.body.setAttribute('data-theme', 'light');
+        }
+      }
+    } catch (e) {
+      setMounted(true);
+    }
   }, []);
 
   const toggleTheme = () => {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(nextTheme);
-    localStorage.setItem('studiospace_theme', nextTheme);
+    try {
+      localStorage.setItem('keyastudio_theme', nextTheme);
+      localStorage.setItem('studiospace_theme', nextTheme);
+    } catch (e) {}
+
+    const root = document.documentElement;
     if (nextTheme === 'dark') {
-      document.documentElement.classList.add('dark');
+      root.classList.add('dark');
+      root.setAttribute('data-theme', 'dark');
+      root.style.colorScheme = 'dark';
+      if (document.body) {
+        document.body.classList.add('dark');
+        document.body.setAttribute('data-theme', 'dark');
+      }
     } else {
-      document.documentElement.classList.remove('dark');
+      root.classList.remove('dark');
+      root.setAttribute('data-theme', 'light');
+      root.style.colorScheme = 'light';
+      if (document.body) {
+        document.body.classList.remove('dark');
+        document.body.setAttribute('data-theme', 'light');
+      }
     }
   };
 
