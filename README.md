@@ -16,9 +16,9 @@
 | Destination | URL |
 | :--- | :--- |
 | 🚀 **Live Client Website** | [https://keya-studio-frontend.vercel.app](https://keya-studio-frontend.vercel.app) |
-| ⚡ **Live Backend API** | [https://keya-studio-backend.vercel.app](https://keya-studio-backend.vercel.app) |
-| 💻 **Frontend Repository** | [https://github.com/tharimakeya-dev/keya_studio_frontend](https://github.com/tharimakeya-dev/keya_studio_frontend) |
-| 🛠️ **Backend Repository** | [https://github.com/tharimakeya-dev/keya_studio_backend](https://github.com/tharimakeya-dev/keya_studio_backend) |
+| ⚡ **Live Back end API** | [https://keya-studio-backend.vercel.app](https://keya-studio-backend.vercel.app) |
+| 💻 **Front end Repository** | [https://github.com/tharimakeya-dev/keya_studio_frontend](https://github.com/tharimakeya-dev/keya_studio_front end) |
+| 🛠️ **Back end Repository** | [https://github.com/tharimakeya-dev/keya_studio_backend](https://github.com/tharimakeya-dev/keya_studio_back end) |
 
 ---
 
@@ -68,7 +68,7 @@
 | **Backend Framework** | [Express.js 5.3](https://expressjs.com/), [Node.js](https://nodejs.org/) (v20+ / v24 LTS) |
 | **Database** | [MongoDB Atlas](https://www.mongodb.com/atlas) with Official Native Driver (v7.8) |
 | **Authentication & Security** | JWT (JSON Web Tokens), HTTPOnly Cookies, Bcrypt.js, CORS Credentials |
-| **Deployment** | [Vercel](https://vercel.com/) (Frontend & Serverless Node.js Backend) |
+| **Deployment** | [Vercel](https://vercel.com/) (Frontend & Server less Node.js Back end) |
 
 ---
 
@@ -166,7 +166,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | **No Default Alerts/Confirms** | ✅ Complete | Toast feedback via Sonner and custom modal dialogs |
 | **Sticky Navbar with Aperture Logo** | ✅ Complete | Logo, active route indicators, theme toggle, user avatar dropdown |
 | **Footer with Modern X Logo** | ✅ Complete | Official X logo (no Twitter bird), categories, newsletter, legal links |
-| **Hero Slider (>= 3 slides)** | ✅ Complete | Crossfade slider with high-res photography and CTAs |
+| **Hero Slider (>= 3 slides)** | ✅ Complete | Cross fade slider with high-res photography and CTAs |
 | **Featured Studios (.limit(6))** | ✅ Complete | 6 verified studios loaded dynamically from MongoDB |
 | **Browse by Categories** | ✅ Complete | 5 discipline cards pre-filtering the `/studios` page |
 | **2 Extra Home Sections** | ✅ Complete | "How Booking Works" (4 steps) & "Host Guarantee & Support" (4 assurances) |
